@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CardGrid from '@/components/CardGrid.vue';
-import startrack from '../utils/startrack.js';
+import startrack from '@/utils/startrack.js';
 
 export default defineComponent({
   components: { CardGrid },

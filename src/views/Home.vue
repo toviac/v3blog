@@ -1,19 +1,16 @@
+<!-- home page -->
 <template>
-  <img alt="Vue logo" src="@/assets/logo.png" />
-  <HelloWorld></HelloWorld>
+  <div class="home">
+    <CardGrid></CardGrid>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { defineComponent } from 'vue';
+import CardGrid from '@/components/CardGrid.vue';
 
 export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-})
+  components: { CardGrid },
+});
 </script>
-
-<style>
-</style>
+<style lang="scss"></style>

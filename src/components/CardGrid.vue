@@ -23,9 +23,19 @@
 import { reactive, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
+interface Card {
+  name: string;
+  area: string;
+  color: string;
+  icon: string;
+  path: string;
+  isExternal?: boolean;
+  target?: string;
+}
+
 const cardGrid = () => {
   const $router = useRouter();
-  const cardList = [
+  const cardList: Card[] = [
     {
       name: 'Blog',
       area: 'area_a',
@@ -71,7 +81,7 @@ const cardGrid = () => {
       icon: 'icon-mail',
       path: 'mailto:me@doco.dev',
       isExternal: true,
-      target: '',
+      target: '_parent',
     },
     {
       name: 'QQ',
@@ -90,13 +100,13 @@ const cardGrid = () => {
   const cardMouseLeave = (index: number) => {
     styleList[index] = ``;
   };
-  const cardClick = (card: any) => {
+  const cardClick = (card: Card) => {
     if (!card.path) return;
     if (!card.isExternal) {
       $router.push(card.path);
       return;
     }
-    window.open(card.path, '_blank');
+    window.open(card.path, card.target);
   };
   return {
     cardList,

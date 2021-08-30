@@ -7,29 +7,24 @@
       class="card"
       :class="card.area"
       :style="styleList[index]"
+      @click="cardClick(card)"
       @mouseover="cardMouseOver(index)"
       @mouseleave="cardMouseLeave(index)"
     >
-      <a v-if="card.isExternal" :href="card.path" :target="card.target || ''">
-        <span class="icon iconfont" :class="card.icon"></span>
-        <div class="card-desc">
-          {{ card.name }}
-        </div>
-      </a>
-      <router-link v-else :to="card.path || ''">
-        <span class="icon iconfont" :class="card.icon"></span>
-        <div class="card-desc">
-          {{ card.name }}
-        </div>
-      </router-link>
+      <span class="icon iconfont" :class="card.icon"></span>
+      <div class="card-desc">
+        {{ card.name }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { reactive, defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 const cardGrid = () => {
+  const $router = useRouter();
   const cardList = [
     {
       name: 'Blog',
@@ -95,11 +90,20 @@ const cardGrid = () => {
   const cardMouseLeave = (index: number) => {
     styleList[index] = ``;
   };
+  const cardClick = (card: any) => {
+    if (!card.path) return;
+    if (!card.isExternal) {
+      $router.push(card.path);
+      return;
+    }
+    window.open(card.path, '_blank');
+  };
   return {
     cardList,
     styleList,
     cardMouseOver,
     cardMouseLeave,
+    cardClick,
   };
 };
 export default defineComponent({
@@ -124,6 +128,9 @@ export default defineComponent({
   .card {
     cursor: pointer;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #fff;
     font-size: 2rem;
     background-color: rgba($color: #ccc, $alpha: 0.8);

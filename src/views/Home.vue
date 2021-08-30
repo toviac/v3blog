@@ -48,7 +48,7 @@ export default defineComponent({
 
   .card-grid {
     position: absolute;
-    top: 50%;
+    top: 61.8vh;
     transform: translateY(-50%);
     left: 100px;
   }

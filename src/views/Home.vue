@@ -1,56 +1,75 @@
-<!-- home page -->
 <template>
-  <div class="home">
-    <canvas id="startrack"></canvas>
-    <div class="background-cover"></div>
-    <CardGrid></CardGrid>
+  <div class="default-layout">
+    <nav-bar></nav-bar>
+    <div class="home-main-wrapper">
+      <div class="grid-layout">
+        <router-view v-slot="{ Component }">
+          <transition name="fade-transform" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+        <side-list></side-list>
+      </div>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import CardGrid from '@/components/CardGrid.vue';
-import startrack from '@/plugins/startrack.js';
+<script>
+import NavBar from '@/components/NavBar.vue';
+import SideList from '@/components/SideList.vue';
 
-export default defineComponent({
-  components: { CardGrid },
-  mounted() {
-    const el = document.querySelector('#startrack');
-    startrack(el);
+export default {
+  name: 'DefaultLayout',
+  components: {
+    NavBar,
+    SideList,
   },
-});
+  data() {
+    return {};
+  },
+  computed: {},
+  watch: {},
+  methods: {},
+};
 </script>
-<style lang="scss">
-.home {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  .background-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(
-      to top,
-      rgba(32, 32, 32, 1) 0%,
-      rgba(32, 32, 32, 0) 100%
-    );
-  }
-  #startrack {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
 
-  .card-grid {
-    position: absolute;
-    top: 61.8vh;
-    transform: translateY(-50%);
-    left: 100px;
+<style lang="scss">
+.default-layout {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  height: 100vh;
+  background-color: #fff;
+
+  .home-main-wrapper {
+    width: 100vw;
+    height: calc(100vh - 60px);
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .grid-layout {
+    width: 1040px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: calc(100% - 320px) 300px;
+    grid-column-gap: 20px;
+    grid-template-areas: 'main side';
+    .side-list {
+      grid-area: side;
+    }
+  }
+  .fade-transform-leave-active,
+  .fade-transform-enter-active {
+    transition: all 0.5s;
+  }
+  .fade-transform-enter {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  .fade-transform-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
   }
 }
 </style>

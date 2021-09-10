@@ -2,10 +2,7 @@
 <template>
   <div class="nav-bar">
     <div class="nav-bar-container">
-      <router-link to="/" class="logo">
-        <!-- <img class="logo" src="/logo.png" alt="logo"> -->
-        Doco
-      </router-link>
+      <router-link to="/" class="logo">Nanoda!</router-link>
       <el-menu
         mode="horizontal"
         :default-active="activeIndex"
@@ -91,7 +88,7 @@ export default {
     font-size: 40px;
     font-weight: bold;
     height: 56px;
-    padding-left: 20px;
+    color: #0a85ed;
     &:visited,
     &:active {
       color: inherit;

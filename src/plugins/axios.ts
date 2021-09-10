@@ -23,8 +23,7 @@ axios.interceptors.response.use(
 
 const responseHandle = function (response: AxiosResponse) {
   return new Promise(function (resolve, reject) {
-    console.log('response: ', response);
-    let data = response.data;
+    const data = response.data;
     if (response.status === 200) {
       resolve(data);
     } else {
@@ -34,20 +33,20 @@ const responseHandle = function (response: AxiosResponse) {
 };
 
 export default {
-  async $get(url: string, params: object) {
-    let response = await axios.get(url, { params: params });
+  async $get(url: string, params: any) {
+    const response = await axios.get(url, { params: params });
     return responseHandle(response);
   },
-  async $post(url: string, params: object) {
-    let response = await axios.post(url, params);
+  async $post(url: string, params: any) {
+    const response = await axios.post(url, params);
     return responseHandle(response);
   },
-  async $put(url: string, params: object) {
-    let response = await axios.put(url, params);
+  async $put(url: string, params: any) {
+    const response = await axios.put(url, params);
     return responseHandle(response);
   },
-  async $delete(url: string, params: object) {
-    let response = await axios.delete(url, { data: params });
+  async $delete(url: string, params: any) {
+    const response = await axios.delete(url, { data: params });
     return responseHandle(response);
   },
 };

@@ -1,0 +1,17 @@
+<svg t="1631257409507" class="icon" viewBox="0 0 500 500" width="500" height="500" stroke="#000" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" fill="#000" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1488" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <symbol id="noodle" viewBox="0 0 500 500">
+      <!-- A  rx  ry  顺时针角度  1大弧0小弧  1顺时针0逆时针  终点x  终点y -->
+      <path d="M 50 250 A 20 20 0 1 0 450 250" stroke="black" stroke-width="15" fill="none" />
+      <line x1="50" y1="250" x2="450" y2="250"></line>
+      <line x1="100" y1="250" x2="100" y2="150"></line>
+      <line x1="150" y1="250" x2="150" y2="137.5"></line>
+      <line x1="200" y1="250" x2="200" y2="125"></line>
+      <!-- 筷子 -->
+      <line x1="70" y1="170" x2="450" y2="75"></line>
+      <line x1="75" y1="190" x2="460" y2="110"></line>
+      <text x="105" y="350" font-size="100" stroke-width="5" fill="inherit">v o i d</text>
+    </symbol>
+  </defs>
+  <use href="#noodle" x="0" y="0" width="500" height="500"></use>
+</svg>

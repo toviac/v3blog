@@ -106,7 +106,7 @@ export default {
       position: relative;
       // 背景图片资源宽高比3/5, side-card固定宽度300px;
       height: 230px;
-      background: url('~@/assets/images/87535782_p0.png') no-repeat top center;
+      background: url('@/assets/images/87535782_p0.png') no-repeat top center;
       background-size: 300px 243px;
       overflow: hidden;
       transition: all 0.2s ease-in-out;

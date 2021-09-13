@@ -1,9 +1,9 @@
 <template>
-  <div class="article-content" v-loading="loading">
+  <div v-loading="loading" class="article-content">
     <!-- 'v-html' directive can lead to XSS attack  vue/no-v-html -->
     <!-- eslint-disable-next-line -->
     <div class="html" v-html="content"></div>
-    <el-dialog :visible.sync="showImgPreview" top="0" width="80%">
+    <el-dialog v-model="showImgPreview" top="0" width="80%">
       <img :src="imgSrc" alt="" />
     </el-dialog>
   </div>
@@ -28,7 +28,6 @@ export default {
   created() {
     this.getData();
   },
-  mounted() {},
   methods: {
     async getData() {
       this.loading = true;
@@ -48,22 +47,22 @@ export default {
     // 图片/链接添加事件
     addListeners() {
       this.imgGroup = document.querySelectorAll('.article-content img');
-      this.imgGroup.forEach(img => {
+      this.imgGroup.forEach((img) => {
         img.addEventListener('click', this.imgPreview);
       });
       this.linkGroup = document.querySelectorAll('.article-content a');
-      this.linkGroup.forEach(link => {
+      this.linkGroup.forEach((link) => {
         link.addEventListener('click', this.navigate, false);
       });
     },
     removeListeners() {
       if (this.imgGroup) {
-        this.imgGroup.forEach(img => {
+        this.imgGroup.forEach((img) => {
           img.removeEventListener('click', this.imgPreview);
         });
       }
       if (this.linkGroup) {
-        this.linkGroup.forEach(link => {
+        this.linkGroup.forEach((link) => {
           link.removeEventListener('click', this.navigate, false);
         });
       }
@@ -81,7 +80,11 @@ export default {
       let { target } = e;
       let i = 0;
       // Go throught 5 parents max to find a tag
-      while (i < 5 && !(target instanceof HTMLAnchorElement) && target.parentNode) {
+      while (
+        i < 5 &&
+        !(target instanceof HTMLAnchorElement) &&
+        target.parentNode
+      ) {
         target = target.parentNode;
         i++;
       }
@@ -125,10 +128,10 @@ export default {
       /* atom-one-dark */
       display: block;
       overflow-x: auto;
-      padding: 0.5em;
+      padding: 8px 16px;
       color: #abb2bf;
       background: #282c34;
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -137,14 +140,6 @@ export default {
     border-left: 3px solid #409eff;
     padding: 10px;
     background-color: #eee;
-  }
-
-  // 代码样式
-  code {
-    font-family: Helvetica;
-    color: #c7254e;
-    background-color: #f9f2f4;
-    border-radius: 4px;
   }
   img,
   video {

@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import router from './router';
 import axios from '@/plugins/axios';
 import { ElLoading } from 'element-plus';

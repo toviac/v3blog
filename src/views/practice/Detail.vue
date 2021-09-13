@@ -5,7 +5,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, defineAsyncComponent } from 'vue';
 import { list } from './Index.vue';
 
 const modules = import.meta.glob('/src/views/practice/*.vue');
@@ -21,6 +21,15 @@ export default defineComponent({
       console.log('component: ', componentName);
       return `/src/views/practice/${componentName}.vue`;
     },
+  },
+  created() {
+    const originComponents = this.$options.components || {};
+    Object.keys(modules).forEach((path) => {
+      const name = path.match(/([^/]+\.vue$/)?.[1];
+      if (name) {
+        originComponents[name] = defineAsyncComponent(modules[path]);
+      }
+    });
   },
 });
 </script>

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import throttle from 'lodash.throttle';
-const $ = require('jquery');
+import $ from 'jquery';
 
 var keyMonitor = function () {
   var keyAction = function(event) {

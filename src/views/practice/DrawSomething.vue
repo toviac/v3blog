@@ -26,7 +26,7 @@
             </el-form>
           </el-card>
         </div>
-        <div v-if="showWinMask" class="mask" @click="showWinMask = false">
+        <div v-else-if="showWinMask" class="mask" @click="showWinMask = false">
           <el-card class="win-card">
             <h3>{{ winUserName }} has won! (click mask to close)</h3>
             <img class="win-image" :src="winImage" alt="" />
@@ -502,7 +502,7 @@ export default {
   .fade-leave-active {
     transition: opacity 0.3s;
   }
-  .fade-enter,
+  .fade-enter-from,
   .fade-leave-to {
     opacity: 0;
   }

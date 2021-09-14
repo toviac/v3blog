@@ -20,6 +20,10 @@ const routes = [
         name: 'PracticeDetail',
         component: () => import('@/views/practice/Detail.vue'),
       },
+      {
+        path: '/about',
+        component: () => import('@/views/about/Index.vue'),
+      },
     ],
   },
 ];

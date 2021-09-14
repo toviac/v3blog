@@ -63,13 +63,13 @@ export default {
   .fade-transform-enter-active {
     transition: all 0.5s;
   }
-  .fade-transform-enter {
+  .fade-transform-enter-from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-10px);
   }
   .fade-transform-leave-to {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(10px);
   }
 }
 </style>

@@ -7,8 +7,8 @@ import styleImport from 'vite-plugin-style-import';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'https://doco.vip'
-    }
+      '/api': 'https://doco.vip',
+    },
   },
   plugins: [
     vue(),
@@ -16,9 +16,9 @@ export default defineConfig({
     ViteComponents({
       customComponentResolvers: [
         ElementPlusResolver({
-          importStyle: true
-        })
-      ]
+          importStyle: true,
+        }),
+      ],
     }),
     //按需导入element-plus的css样式
     styleImport({
@@ -26,14 +26,14 @@ export default defineConfig({
         {
           libraryName: 'element-plus',
           esModule: true,
-          resolveStyle: name => {
-            return `element-plus/theme-chalk/${name}.css`
+          resolveStyle: (name) => {
+            return `element-plus/theme-chalk/${name}.css`;
           },
         },
       ],
-  }),
+    }),
   ],
   resolve: {
-    alias: [{ find: '@', replacement: '/src' }]
-  }
-})
+    alias: [{ find: '@', replacement: '/src' }],
+  },
+});

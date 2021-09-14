@@ -1,5 +1,5 @@
 const disableLog = () => {
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     console.log = () => 0;
   }
 };

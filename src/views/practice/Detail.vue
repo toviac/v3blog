@@ -6,7 +6,7 @@
 import { defineComponent, defineAsyncComponent } from 'vue';
 import { list } from './Index.vue';
 
-const modules = import.meta.glob('./*.vue');
+const modules = import.meta.glob('./pages/*.vue');
 
 export default defineComponent({
   components: {},

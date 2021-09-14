@@ -46,7 +46,7 @@ export default function (el) {
     stars.push({
       x: rand(-cf.width, cf.width),
       y: rand(-cf.height, cf.height),
-      size: 1.2,
+      size: 1.5,
       color: randomColor(),
     });
   }

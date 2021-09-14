@@ -2,7 +2,10 @@
 <template>
   <div class="nav-bar">
     <div class="nav-bar-container">
-      <router-link to="/" class="logo">Nanoda!</router-link>
+      <router-link to="/" class="logo">
+        <!-- <img class="site-icon" src="@/assets/icon.svg" alt="" /> -->
+        Mian
+      </router-link>
       <el-menu
         mode="horizontal"
         :default-active="activeIndex"
@@ -92,6 +95,10 @@ export default {
     &:visited,
     &:active {
       color: inherit;
+    }
+    img {
+      width: 40px;
+      height: 40px;
     }
   }
   .el-menu {

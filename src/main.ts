@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import '@/utils/disableLog';
 import axios from '@/plugins/axios';
 import { ElLoading } from 'element-plus';
 

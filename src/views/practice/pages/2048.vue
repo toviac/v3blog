@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../utils/2048/css/main.scss';
+@import '@/utils/2048/css/main.scss';
 .practice-2048 {
   width: 100%;
   padding: 10px;

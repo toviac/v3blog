@@ -107,3 +107,7 @@ a:-webkit-any-link {
 .layout-leave-active {
   opacity: 0;
 }
+
+#nprogress .bar {
+  background: #409eff !important; //自定义颜色
+}

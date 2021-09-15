@@ -5,6 +5,7 @@ import store from './store';
 import '@/utils/disableLog';
 import axios from '@/plugins/axios';
 import { ElLoading } from 'element-plus';
+import 'element-plus/dist/index.css';
 
 import '@/style/common.scss';
 

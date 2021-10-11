@@ -11,9 +11,6 @@
         <span class="name">
           {{ from }}
         </span>
-        <!-- <span class="time">
-          {{ data.timestamp | timeFilter }}
-        </span> -->
       </div>
       <div class="bubble">
         <slot>
@@ -30,11 +27,6 @@ import defaultAvatar from '@/assets/images/default_avatar.jpg';
 
 export default defineComponent({
   components: {},
-  filters: {
-    timeFilter(val) {
-      return new Date(val).toLocaleString();
-    },
-  },
   props: {
     side: {
       type: String,

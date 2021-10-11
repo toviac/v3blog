@@ -13,7 +13,8 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   components: {},
   props: {
     item: {
@@ -40,7 +41,7 @@ export default {
       this.$emit('click');
     },
   },
-};
+});
 </script>
 <style lang="scss">
 .article-card {

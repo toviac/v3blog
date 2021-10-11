@@ -6,7 +6,7 @@ import ViteComponents, { ElementPlusResolver } from 'vite-plugin-components';
 export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
-      '/api': 'https://doco.vip',
+      '/api': 'https://voidmian.com',
     },
   },
   plugins: [

@@ -7,6 +7,10 @@ const routes = [
     children: [
       { path: 'blog', component: () => import('@/views/blog/Index.vue') },
       {
+        path: '/blog/edit',
+        component: () => import('@/views/blog/Editor.vue'),
+      },
+      {
         path: '/blog/:id',
         name: 'BlogDetail',
         component: () => import('@/views/blog/BlogDetail.vue'),

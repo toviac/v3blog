@@ -9,6 +9,7 @@
 import Vditor from 'vditor';
 import 'vditor/src/assets/scss/index.scss';
 import { defineComponent } from 'vue';
+import { ElMessageBox } from 'element-plus';
 
 export default defineComponent({
   components: {},
@@ -20,12 +21,37 @@ export default defineComponent({
   computed: {},
   watch: {},
   mounted() {
+    this.showLogin();
     this.initEditor();
   },
   beforeUnmount() {
     if (this.vditor) this.vditor = null;
   },
   methods: {
+    showLogin() {
+      ElMessageBox({
+        title: 'Login',
+        // message: 'Input password',
+        showInput: true,
+        inputPlaceholder: 'Input password',
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+        closeOnClickModal: false,
+        closeOnPressEscape: false,
+        beforeClose: (action, instance, done) => {
+          if (action === 'confirm') {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = 'Loading...';
+            const password = instance.inputValue;
+            this.$axios.put('', { password });
+            setTimeout(() => {
+              done();
+            }, 3000);
+          }
+        },
+      });
+    },
     initEditor() {
       const options = {
         toolbar: [

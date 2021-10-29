@@ -14,13 +14,16 @@ export default defineComponent({
   components: {},
   data() {
     return {
-      vditor: null,
+      vditor: null as null | Vditor,
     };
   },
   computed: {},
   watch: {},
   mounted() {
     this.initEditor();
+  },
+  beforeUnmount() {
+    if (this.vditor) this.vditor = null;
   },
   methods: {
     initEditor() {
@@ -58,10 +61,13 @@ export default defineComponent({
             name: 'more',
             toolbar: [
               {
-                name: '保存',
+                name: 'save',
+                tipPosition: 's',
                 tip: '保存',
+                className: 'right',
+                icon: '保存',
                 click: () => {
-                  console.log('save');
+                  this.onSave();
                 },
               },
               'both',
@@ -77,7 +83,30 @@ export default defineComponent({
           },
         ],
       };
-      this.vditor = new Vditor('editor', options) as any;
+      this.vditor = new Vditor('editor', options);
+    },
+    async onSave() {
+      const value = (this.vditor as Vditor).getValue();
+      // 获取标题正则
+      const getTitleReg = /^#\s(.*)/g;
+      let title = '';
+      let regTitle = getTitleReg.exec(value);
+      if (regTitle) {
+        title = regTitle[1];
+      }
+      if (!title) {
+        this.$message.error('请输入标题');
+        return;
+      }
+      if (this.$route.params.id) {
+        await this.$axios.put('', {
+          id: this.$route.params.id,
+          title,
+          content: value,
+        });
+      } else {
+        await this.$axios.post('', { title, content: value });
+      }
     },
   },
 });

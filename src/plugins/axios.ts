@@ -33,19 +33,19 @@ const responseHandle = function (response: AxiosResponse) {
 };
 
 export default {
-  async $get(url: string, params: any) {
+  async get(url: string, params: any) {
     const response = await axios.get(url, { params: params });
     return responseHandle(response);
   },
-  async $post(url: string, params: any) {
+  async post(url: string, params: any) {
     const response = await axios.post(url, params);
     return responseHandle(response);
   },
-  async $put(url: string, params: any) {
+  async put(url: string, params: any) {
     const response = await axios.put(url, params);
     return responseHandle(response);
   },
-  async $delete(url: string, params: any) {
+  async delete(url: string, params: any) {
     const response = await axios.delete(url, { data: params });
     return responseHandle(response);
   },

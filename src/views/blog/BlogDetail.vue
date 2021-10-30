@@ -31,9 +31,7 @@ export default {
   methods: {
     async getData() {
       this.loading = true;
-      console.log('params: ', this.$route.params);
       const { id } = this.$route.params;
-      console.log('id: ', id);
       const res = await this.$axios.get('/api/post', { id });
       let { content } = res.data;
       // 所有带hash的链接替换为history模式

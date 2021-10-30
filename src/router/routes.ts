@@ -7,7 +7,7 @@ const routes = [
     children: [
       { path: 'blog', component: () => import('@/views/blog/Index.vue') },
       {
-        path: '/blog/edit',
+        path: '/blog/edit/:id?',
         component: () => import('@/views/blog/Editor.vue'),
       },
       {

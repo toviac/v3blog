@@ -1,6 +1,6 @@
 <!-- editor -->
 <template>
-  <div class="blog-editor">
+  <div v-loading="loading" class="blog-editor">
     <div id="editor"></div>
   </div>
 </template>
@@ -11,10 +11,17 @@ import 'vditor/src/assets/scss/index.scss';
 import { defineComponent } from 'vue';
 import { ElMessageBox } from 'element-plus';
 
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    id: string | string[];
+  }
+}
+
 export default defineComponent({
   components: {},
   data() {
     return {
+      loading: false,
       vditor: null as null | Vditor,
     };
   },
@@ -47,7 +54,7 @@ export default defineComponent({
             this.$axios.put('', { password });
             setTimeout(() => {
               done();
-            }, 3000);
+            }, 0);
           }
         },
       });
@@ -108,15 +115,39 @@ export default defineComponent({
             ],
           },
         ],
+        after: () => {
+          if (this.$route.params.id) {
+            this.getPost();
+          }
+        },
       };
       this.vditor = new Vditor('editor', options);
     },
+    getPost() {
+      const { id } = this.$route.params;
+      this.loading = true;
+      this.$axios
+        .get('/api/post', { id: id })
+        .then(({ data }) => {
+          const { content } = data;
+          if (this.vditor) {
+            this.vditor.setValue(content);
+          }
+        })
+        .catch((err) => {
+          console.log('ERR_GET_POST: ', err);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     async onSave() {
-      const value = (this.vditor as Vditor).getValue();
+      const content = (this.vditor as Vditor).getValue();
       // 获取标题正则
       const getTitleReg = /^#\s(.*)/g;
       let title = '';
-      let regTitle = getTitleReg.exec(value);
+      const author = 'admin';
+      let regTitle = getTitleReg.exec(content);
       if (regTitle) {
         title = regTitle[1];
       }
@@ -125,13 +156,18 @@ export default defineComponent({
         return;
       }
       if (this.$route.params.id) {
-        await this.$axios.put('', {
+        await this.$axios.put('/api/post', {
           id: this.$route.params.id,
           title,
-          content: value,
+          author,
+          content,
         });
       } else {
-        await this.$axios.post('', { title, content: value });
+        await this.$axios.post('/api/post', {
+          title,
+          author,
+          content,
+        });
       }
     },
   },

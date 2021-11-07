@@ -32,8 +32,12 @@ export default {
   methods: {
     async getList() {
       if (!this.postList.length) {
-        const { list } = await this.$axios.get('/api/post/list');
-        this.postList = list;
+        try {
+          const { list } = await this.$axios.get('/api/post/list');
+          this.postList = list;
+        } catch (e) {
+          console.log('ERR_GET_POST: ', e);
+        }
       }
     },
     cardClick(id) {

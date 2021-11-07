@@ -1,6 +1,6 @@
 const disableLog = () => {
   if (import.meta.env.PROD) {
-    // console.log = () => 0;
+    console.log = () => 0;
   }
 };
 

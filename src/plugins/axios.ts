@@ -9,22 +9,23 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    let msg = null;
+    let errorMessage = null;
+    const { response } = error;
+    console.log(response);
     // Do something with response error
-    switch (error.message) {
-      case 'Network Error':
-        // 显示网络错误
-        msg = { data: { resultCode: '0', errorMessage: '网络已断开' } };
-        return msg;
+    switch (response.status) {
+      case 401:
+        errorMessage = response.data;
+        break;
     }
-    return Promise.reject(error);
+    return Promise.reject(errorMessage);
   },
 );
 
-const responseHandle = function (response: AxiosResponse) {
+const responseHandle = function (response: AxiosResponse): Promise<any> {
   return new Promise(function (resolve, reject) {
     const data = response.data;
-    if (response.status === 200) {
+    if (Number(response.status) >= 200 && Number(response.status) < 300) {
       resolve(data);
     } else {
       reject(data);
@@ -41,17 +42,12 @@ export default {
     return responseHandle(response);
   },
   async post(url: string, params: any, options: any) {
-    const response = await axios.post(
-      url,
-      Object.assign({}, { data: params }, options),
-    );
+    // axios.post(url, data, config)
+    const response = await axios.post(url, params, options);
     return responseHandle(response);
   },
   async put(url: string, params: any, options: any) {
-    const response = await axios.put(
-      url,
-      Object.assign({}, { data: params }, options),
-    );
+    const response = await axios.put(url, params, options);
     return responseHandle(response);
   },
   async delete(url: string, params: any, options: any) {

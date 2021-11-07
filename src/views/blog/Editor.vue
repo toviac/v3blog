@@ -21,26 +21,27 @@ export default defineComponent({
   components: {},
   data() {
     return {
-      loading: false,
+      loading: true,
       vditor: null as null | Vditor,
+      token: '',
     };
   },
   computed: {},
   watch: {},
   mounted() {
-    this.showLogin();
     this.initEditor();
   },
   beforeUnmount() {
     if (this.vditor) this.vditor = null;
   },
   methods: {
-    showLogin() {
+    showLogin(data: any) {
       ElMessageBox({
-        title: 'Login',
+        title: '密码',
         // message: 'Input password',
         showInput: true,
         inputPlaceholder: 'Input password',
+        customClass: 'pwd-msg-box',
         showClose: false,
         showCancelButton: false,
         confirmButtonText: 'Ok',
@@ -50,13 +51,23 @@ export default defineComponent({
           if (action === 'confirm') {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = 'Loading...';
-            const password = instance.inputValue;
-            this.$axios.put('', { password });
-            setTimeout(() => {
-              done();
-            }, 0);
+            this.getToken({ username: 'admin', password: instance.inputValue })
+              .then(() => {
+                done();
+                this.onSave(data);
+              })
+              .finally(() => {
+                instance.confirmButtonLoading = false;
+                instance.confirmButtonText = 'Ok';
+              });
           }
         },
+      });
+      this.$nextTick(() => {
+        const inputEl: any = document.querySelector(
+          '.pwd-msg-box input.el-input__inner',
+        );
+        if (inputEl) inputEl.focus();
       });
     },
     initEditor() {
@@ -100,7 +111,7 @@ export default defineComponent({
                 className: 'right',
                 icon: '保存',
                 click: () => {
-                  this.onSave();
+                  this.beforeSave();
                 },
               },
               'both',
@@ -116,6 +127,7 @@ export default defineComponent({
           },
         ],
         after: () => {
+          this.loading = false;
           if (this.$route.params.id) {
             this.getPost();
           }
@@ -123,25 +135,41 @@ export default defineComponent({
       };
       this.vditor = new Vditor('editor', options);
     },
+    getToken(data: any): Promise<any> {
+      return new Promise((resolve, reject) => {
+        this.$axios
+          .post('/api/login', data)
+          .then((res: any) => {
+            this.token = res.access_token;
+            resolve(res);
+          })
+          .catch((err: any) => {
+            if (err.statusCode === 401) {
+              this.$message.error('密码错误');
+            }
+            reject();
+          });
+      });
+    },
     getPost() {
       const { id } = this.$route.params;
       this.loading = true;
       this.$axios
         .get('/api/post', { id: id })
-        .then(({ data }) => {
-          const { content } = data;
+        .then((res: any) => {
+          const { content } = res.data;
           if (this.vditor) {
             this.vditor.setValue(content);
           }
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log('ERR_GET_POST: ', err);
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    async onSave() {
+    beforeSave() {
       const content = (this.vditor as Vditor).getValue();
       // 获取标题正则
       const getTitleReg = /^#\s(.*)/g;
@@ -155,20 +183,43 @@ export default defineComponent({
         this.$message.error('请输入标题');
         return;
       }
-      if (this.$route.params.id) {
-        await this.$axios.put('/api/post', {
-          id: this.$route.params.id,
-          title,
-          author,
-          content,
-        });
-      } else {
-        await this.$axios.post('/api/post', {
-          title,
-          author,
-          content,
-        });
+      this.showLogin({ title, author, content });
+    },
+    async onSave({
+      title,
+      author,
+      content,
+    }: {
+      title: string;
+      author: string;
+      content: string;
+    }) {
+      const options = { headers: { Authorization: `Bearer ${this.token}` } };
+      const postId = this.$route.params.id;
+      const method = postId ? 'put' : 'post';
+      this.loading = true;
+      try {
+        await this.$axios[method](
+          '/api/post',
+          {
+            id: postId,
+            title,
+            author,
+            content,
+          },
+          options,
+        );
+
+        this.$message.success('保存成功');
+        if (postId) {
+          this.$router.push(`/blog/${postId}`);
+        } else {
+          this.$router.push('/blog');
+        }
+      } catch (e) {
+        this.$message.error('保存失败');
       }
+      this.loading = false;
     },
   },
 });

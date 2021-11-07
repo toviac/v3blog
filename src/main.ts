@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import '@/utils/disableLog';
 import axios from '@/plugins/axios';
-import { AxiosInstance } from 'axios';
+// import { AxiosInstance } from 'axios';
 import { ElLoading, ElMessage } from 'element-plus';
 import { IMessage } from 'element-plus/lib/components/message/src/types'; //引入类型文件
 import 'element-plus/dist/index.css';
@@ -13,7 +13,7 @@ import '@/style/common.scss';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $axios: AxiosInstance;
+    $axios: any;
     $message: IMessage;
   }
 }
